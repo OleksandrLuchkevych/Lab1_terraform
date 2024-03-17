@@ -1,7 +1,13 @@
-output "arn" {
-    value = aws_dynamodb_table.this.arn  
-}
+resource "aws_dynamodb_table" "this" {
+  name           = var.table_name
+  billing_mode   = "PROVISIONED"
+  read_capacity  = 20
+  write_capacity = 20
+  hash_key       = "id"
 
-output "id" {
-    value = aws_dynamodb_table.this.id  
+  attribute {
+    name = "id"
+    type = "S"
+  }
+  
 }
