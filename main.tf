@@ -21,4 +21,5 @@ module "lambda" {
   source = "./modules/lambda"
 
   get_all_courses_arn = module.iam.get_all_courses_role_arn  
+  get_all_authors_arn = module.iam.get_all_authors_role_arn
 }
