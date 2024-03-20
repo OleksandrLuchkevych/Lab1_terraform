@@ -24,4 +24,5 @@ module "lambda" {
   get_all_authors_arn = module.iam.get_all_authors_role_arn
   save-course_arn = module.iam.save_course_role_arn
   update-course_arn = module.iam.update_course_role_arn
+  get-course_arn = module.iam.get_course_role_arn
 }

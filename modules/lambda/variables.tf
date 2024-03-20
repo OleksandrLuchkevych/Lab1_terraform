@@ -13,3 +13,7 @@ variable "save-course_arn" {
 variable "update-course_arn" {
   type = string  
 }
+
+variable "get-course_arn" {
+  type = string  
+}
