@@ -5,3 +5,7 @@ variable "get_all_courses_arn" {
 variable "get_all_authors_arn" {
   type = string
 }
+
+variable "save-course_arn" {
+  type = string  
+}

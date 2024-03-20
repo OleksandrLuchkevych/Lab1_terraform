@@ -31,3 +31,21 @@ resource "aws_lambda_function" "get_all_authors" {
  handler         = "get-all-authors.handler"
  runtime         = "nodejs16.x"
 }
+
+
+# Save Courses
+data "archive_file" "save-course" {
+    type = "zip"
+
+    source_file  = "modules/lambda/functions/save-course/save-course.js" 
+    output_path  = "modules/lambda/functions/save-course/save-course.zip" 
+}
+
+
+resource "aws_lambda_function" "save-course" {
+ filename         = data.archive_file.save-course.output_path
+ function_name   = "save-course"
+ role            =  var.save-course_arn
+ handler         = "save-course.handler"
+ runtime         = "nodejs16.x"
+}
