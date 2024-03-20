@@ -230,3 +230,50 @@ resource "aws_iam_role_policy_attachment" "get_course_police_attachment" {
   policy_arn  = aws_iam_policy.get_course_police.arn
 }
 
+
+
+
+# Delete Courseg
+resource "aws_iam_role" "delete_course_role" {
+ name = "delete-course-role"
+
+assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [{
+      Action = "sts:AssumeRole",
+      Principal = {
+        Service = "lambda.amazonaws.com"
+      },
+      Effect = "Allow"
+    }]
+  })
+}
+
+
+resource "aws_iam_policy" "delete_course_police" {
+
+  policy      = jsonencode({
+   "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": "arn:aws:logs:*:*:*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "dynamodb:DeleteItem",
+            "Resource": var.dynamodb_courses_arn
+        }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "delete_course_police_attachment" {
+  role        = aws_iam_role.delete_course_role.name
+  policy_arn  = aws_iam_policy.delete_course_police.arn
+}

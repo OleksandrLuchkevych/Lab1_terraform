@@ -17,3 +17,7 @@ variable "update-course_arn" {
 variable "get-course_arn" {
   type = string  
 }
+
+variable "delete-course_arn" {
+  type = string 
+}

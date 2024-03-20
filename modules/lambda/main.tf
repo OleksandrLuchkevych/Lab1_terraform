@@ -83,3 +83,20 @@ resource "aws_lambda_function" "get-course" {
  handler         = "get-course.handler"
  runtime         = "nodejs16.x"
 }
+
+# Delete Courses
+data "archive_file" "delete-course" {
+    type = "zip"
+
+    source_file  = "modules/lambda/functions/delete-course/delete-course.js" 
+    output_path  = "modules/lambda/functions/delete-course/delete-course.zip" 
+}
+
+
+resource "aws_lambda_function" "delete-course" {
+ filename         = data.archive_file.delete-course.output_path
+ function_name   = "delete-course"
+ role            =  var.delete-course_arn
+ handler         = "delete-course.handler"
+ runtime         = "nodejs16.x"
+}
