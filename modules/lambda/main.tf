@@ -49,3 +49,20 @@ resource "aws_lambda_function" "save-course" {
  handler         = "save-course.handler"
  runtime         = "nodejs16.x"
 }
+
+# Update Courses
+data "archive_file" "update-course" {
+    type = "zip"
+
+    source_file  = "modules/lambda/functions/update-course/update-course.js" 
+    output_path  = "modules/lambda/functions/update-course/update-course.zip" 
+}
+
+
+resource "aws_lambda_function" "update-course" {
+ filename         = data.archive_file.update-course.output_path
+ function_name   = "update-course"
+ role            =  var.update-course_arn
+ handler         = "update-course.handler"
+ runtime         = "nodejs16.x"
+}

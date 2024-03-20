@@ -134,3 +134,50 @@ resource "aws_iam_role_policy_attachment" "save_course_police_attachment" {
   role        = aws_iam_role.save_course_role.name
   policy_arn  = aws_iam_policy.save_course_police.arn
 }
+
+
+
+# Update Course
+resource "aws_iam_role" "update_course_role" {
+ name = "update-course-role"
+
+assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [{
+      Action = "sts:AssumeRole",
+      Principal = {
+        Service = "lambda.amazonaws.com"
+      },
+      Effect = "Allow"
+    }]
+  })
+}
+
+resource "aws_iam_policy" "update_course_police" {
+
+  policy      = jsonencode({
+          
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": "arn:aws:logs:*:*:*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "dynamodb:PutItem",
+            "Resource": var.dynamodb_courses_arn
+        }
+    ]          
+    }) 
+}
+
+resource "aws_iam_role_policy_attachment" "update_course_police_attachment" {
+  role        = aws_iam_role.update_course_role.name
+  policy_arn  = aws_iam_policy.update_course_police.arn
+}
