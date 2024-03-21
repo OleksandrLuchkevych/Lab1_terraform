@@ -15,6 +15,7 @@ assume_role_policy = jsonencode({
 }
 
 resource "aws_iam_policy" "get_all_courses_police" {
+  name = "get-all-courses-police"
 
   policy      = jsonencode({
         Version = "2012-10-17",
@@ -62,6 +63,7 @@ assume_role_policy = jsonencode({
 }
 
 resource "aws_iam_policy" "get_all_authors_police" {
+  name = "get-all-authors-police"
 
   policy      = jsonencode({
           "Version": "2012-10-17",
@@ -107,6 +109,7 @@ assume_role_policy = jsonencode({
 }
 
 resource "aws_iam_policy" "save_course_police" {
+   name = "save-course-police"
 
   policy      = jsonencode({
           
@@ -154,6 +157,7 @@ assume_role_policy = jsonencode({
 }
 
 resource "aws_iam_policy" "update_course_police" {
+  name = "update-course-police"
 
   policy      = jsonencode({
           
@@ -203,6 +207,7 @@ assume_role_policy = jsonencode({
 
 
 resource "aws_iam_policy" "get_course_police" {
+  name = "get-course-police"
 
   policy      = jsonencode({
    "Version": "2012-10-17",
@@ -251,6 +256,7 @@ assume_role_policy = jsonencode({
 
 
 resource "aws_iam_policy" "delete_course_police" {
+  name = "delete-course-police"
 
   policy      = jsonencode({
    "Version": "2012-10-17",
