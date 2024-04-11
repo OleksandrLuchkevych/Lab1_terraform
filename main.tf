@@ -27,3 +27,10 @@ module "lambda" {
   get-course_arn = module.iam.get_course_role_arn
   delete-course_arn = module.iam.delete_course_role_arn
 }
+
+module "api" {
+  source = "./modules/api"
+ 
+     get_all_authors_arn        = module.lambda.get_all_authors_arn
+    get_all_authors_invoke_arn = module.lambda.get_all_authors_invoke_arn
+}
