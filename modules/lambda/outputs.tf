@@ -26,3 +26,11 @@ output "delete_course_arn" {
 output "delete_course_invoke_arn" {
   value = aws_lambda_function.delete-course.invoke_arn
 }
+
+
+output "save_course_arn" {
+  value = aws_lambda_function.save-course.arn
+}
+output "save_course_invoke_arn" {
+  value = aws_lambda_function.save-course.invoke_arn
+}

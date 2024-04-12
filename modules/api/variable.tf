@@ -30,3 +30,11 @@ variable "delete_course_invoke_arn" {
 variable "delete_course_arn" {
   type = string
 }
+
+variable "save_course_invoke_arn" {
+    type = string
+}
+
+variable "save_course_arn" {
+  type = string
+}
