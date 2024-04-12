@@ -34,3 +34,12 @@ output "save_course_arn" {
 output "save_course_invoke_arn" {
   value = aws_lambda_function.save-course.invoke_arn
 }
+
+
+
+output "update_course_arn" {
+  value = aws_lambda_function.update-course.arn
+}
+output "update_course_invoke_arn" {
+  value = aws_lambda_function.update-course.invoke_arn
+}

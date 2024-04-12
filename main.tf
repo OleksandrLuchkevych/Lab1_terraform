@@ -45,4 +45,7 @@ module "api" {
 
     save_course_arn = module.lambda.save_course_arn
     save_course_invoke_arn = module.lambda.save_course_invoke_arn
+
+    update_course_arn = module.lambda.update_course_arn
+    update_course_invoke_arn = module.lambda.update_course_invoke_arn
 }
