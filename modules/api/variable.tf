@@ -21,3 +21,12 @@ variable "get_course_invoke_arn" {
 variable "get_course_arn" {
   type = string
 }
+
+
+variable "delete_course_invoke_arn" {
+    type = string
+}
+
+variable "delete_course_arn" {
+  type = string
+}

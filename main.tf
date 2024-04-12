@@ -39,4 +39,7 @@ module "api" {
 
     get_course_arn = module.lambda.get_course_arn
     get_course_invoke_arn = module.lambda.get_course_invoke_arn
+
+    delete_course_arn = module.lambda.delete_course_arn
+    delete_course_invoke_arn = module.lambda.delete_course_invoke_arn
 }

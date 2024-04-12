@@ -348,3 +348,125 @@ resource "aws_api_gateway_integration_response" "options_get_course" {
     "method.response.header.Access-Control-Allow-Origin" = "'*'"
 }
 }
+
+
+
+## delete course
+resource "aws_api_gateway_resource" "deleteCourse" {
+  rest_api_id = aws_api_gateway_rest_api.api.id
+  parent_id   = aws_api_gateway_resource.get_all_courses.id
+  path_part   = "delete"
+}
+
+resource "aws_api_gateway_resource" "delete_course" {
+  rest_api_id = aws_api_gateway_rest_api.api.id
+  parent_id   = aws_api_gateway_resource.deleteCourse.id
+  path_part   = "{id}"
+}
+
+resource "aws_api_gateway_method" "delete_course" {
+  rest_api_id   = aws_api_gateway_rest_api.api.id
+  resource_id   = aws_api_gateway_resource.delete_course.id
+  http_method   = "DELETE"
+  authorization = "NONE"
+}
+
+resource "aws_api_gateway_integration" "delete_course" {
+  rest_api_id = aws_api_gateway_rest_api.api.id
+  resource_id = aws_api_gateway_resource.delete_course.id
+  http_method = aws_api_gateway_method.delete_course.http_method
+
+  type                    = "AWS"
+  integration_http_method = "POST"
+  uri = var.delete_course_invoke_arn
+
+  request_templates       = {
+    "application/json" = "{\"id\": \"$input.params('id')\"}"
+  }
+}
+
+
+resource "aws_api_gateway_method_response" "delete_course" {
+  rest_api_id = aws_api_gateway_rest_api.api.id
+  resource_id = aws_api_gateway_resource.delete_course.id
+  http_method = aws_api_gateway_method.delete_course.http_method
+  status_code = "200"
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = true,
+    "method.response.header.Access-Control-Allow-Methods" = true,
+    "method.response.header.Access-Control-Allow-Origin" = true
+  }
+}
+
+resource "aws_api_gateway_integration_response" "delete_course" {
+  rest_api_id = aws_api_gateway_rest_api.api.id
+  resource_id = aws_api_gateway_resource.delete_course.id
+  http_method = aws_api_gateway_method.delete_course.http_method
+  status_code = aws_api_gateway_method_response.delete_course.status_code
+
+ response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" =  "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+    "method.response.header.Access-Control-Allow-Methods" = "'GET,OPTIONS,POST,PUT,DELETE'",
+    "method.response.header.Access-Control-Allow-Origin" = "'*'"
+}
+}
+
+resource "aws_lambda_permission" "delete_course" {
+  statement_id = "AllowExecutionFromAPIGateway"
+  action = "lambda:InvokeFunction"
+  function_name = var.delete_course_arn
+  principal = "apigateway.amazonaws.com"
+
+  source_arn = "${aws_api_gateway_rest_api.api.execution_arn}/*/*"
+}
+
+resource "aws_api_gateway_method" "options_delete_course" {
+  rest_api_id   = aws_api_gateway_rest_api.api.id
+  resource_id   = aws_api_gateway_resource.delete_course.id
+  http_method   = "OPTIONS"
+  authorization = "NONE"
+}
+
+resource "aws_api_gateway_integration" "options_delete_course" {
+  rest_api_id = aws_api_gateway_rest_api.api.id
+  resource_id = aws_api_gateway_resource.delete_course.id
+  http_method = aws_api_gateway_method.options_delete_course.http_method
+
+  type                    = "MOCK"
+
+   request_templates = {
+    "application/json" = "{\"statusCode\": 200}"
+  }
+}
+
+resource "aws_api_gateway_method_response" "options_delete_course" {
+  rest_api_id = aws_api_gateway_rest_api.api.id
+  resource_id = aws_api_gateway_resource.delete_course.id
+  http_method = aws_api_gateway_method.options_delete_course.http_method
+  status_code = "200"
+
+    response_models = {
+    "application/json" = "Empty"
+  }
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = true,
+    "method.response.header.Access-Control-Allow-Methods" = true,
+    "method.response.header.Access-Control-Allow-Origin" = true
+  }
+}
+
+resource "aws_api_gateway_integration_response" "options_delete_course" {
+  depends_on = [ aws_api_gateway_integration.options_delete_course ]
+  rest_api_id = aws_api_gateway_rest_api.api.id
+  resource_id = aws_api_gateway_resource.delete_course.id
+  http_method = aws_api_gateway_method.options_delete_course.http_method
+  status_code = "200"
+
+ response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" =  "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+    "method.response.header.Access-Control-Allow-Methods" = "'GET,OPTIONS,POST,PUT,DELETE'",
+    "method.response.header.Access-Control-Allow-Origin" = "'*'"
+}
+}
