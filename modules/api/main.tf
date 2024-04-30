@@ -7,6 +7,42 @@ resource "aws_api_gateway_rest_api" "api" {
   }
 }
 
+resource "aws_api_gateway_stage" "dev" {
+    deployment_id = aws_api_gateway_deployment.this.id
+    rest_api_id = aws_api_gateway_rest_api.api.id
+    stage_name = "stage"
+}
+
+resource "aws_api_gateway_deployment" "this" {
+  rest_api_id = aws_api_gateway_rest_api.api.id
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  triggers = {
+    redeployment = sha1(jsonencode(aws_api_gateway_rest_api.api.body))
+  }
+
+ depends_on = [
+    aws_api_gateway_method.get_all_authors,
+    aws_api_gateway_method.get_all_courses,
+    aws_api_gateway_method.get_course,
+    aws_api_gateway_method.delete_course,
+    aws_api_gateway_method.save_course,
+    aws_api_gateway_method.update_course,
+    aws_api_gateway_integration.get_all_authors,
+    aws_api_gateway_integration.get_all_courses,
+    aws_api_gateway_integration.get_course,
+    aws_api_gateway_integration.delete_course,
+    aws_api_gateway_integration.save_course,
+    aws_api_gateway_integration.update_course
+  ]
+
+}
+
+
+
 
 ## get_all_authors
 resource "aws_api_gateway_resource" "get_all_authors" {
