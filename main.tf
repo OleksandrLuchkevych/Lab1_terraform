@@ -30,6 +30,9 @@ module "lambda" {
 
 module "api" {
   source = "./modules/api"
+
+  name = "api"
+  stage = "dev"
  
     get_all_authors_arn = module.lambda.get_all_authors_arn
     get_all_authors_invoke_arn = module.lambda.get_all_authors_invoke_arn
@@ -48,4 +51,11 @@ module "api" {
 
     update_course_arn = module.lambda.update_course_arn
     update_course_invoke_arn = module.lambda.update_course_invoke_arn
+}
+
+
+module "s3" {
+  source = "./modules/s3"
+
+  name  = "s3"
 }
