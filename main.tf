@@ -59,3 +59,10 @@ module "s3" {
 
   name  = "s3"
 }
+
+module "cloudfront" {
+  source = "./modules/cloudfront"
+  name   = "cloudfront"
+  stage  = "dev"
+  bucket_regional_domain_name = module.s3.bucket_regional_domain_name
+}
