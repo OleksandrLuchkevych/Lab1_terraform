@@ -597,7 +597,7 @@ resource "aws_api_gateway_resource" "update_course" {
 resource "aws_api_gateway_method" "update_course" {
   rest_api_id   = aws_api_gateway_rest_api.api.id
   resource_id   = aws_api_gateway_resource.update_course.id
-  http_method   = "POST"
+  http_method   = "PUT"
   authorization = "NONE"
 }
 
