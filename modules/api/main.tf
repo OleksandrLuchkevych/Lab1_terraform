@@ -655,24 +655,29 @@ resource "aws_api_gateway_method_response" "update_course" {
   http_method = aws_api_gateway_method.update_course.http_method
   status_code = "200"
 
+  response_models = { "application/json" = "Empty" }
+
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Headers" = true,
-    "method.response.header.Access-Control-Allow-Methods" = true,
     "method.response.header.Access-Control-Allow-Origin" = true
+    "method.response.header.Access-Control-Allow-Headers" = true
+    "method.response.header.Access-Control-Allow-Methods" = true
+    "method.response.header.Access-Control-Allow-Credentials" = false
   }
 }
 
 resource "aws_api_gateway_integration_response" "update_course" {
+depends_on = [aws_api_gateway_integration.update_course]
+
   rest_api_id = aws_api_gateway_rest_api.api.id
   resource_id = aws_api_gateway_resource.update_course.id
   http_method = aws_api_gateway_method.update_course.http_method
   status_code = aws_api_gateway_method_response.update_course.status_code
 
- response_parameters = {
-    "method.response.header.Access-Control-Allow-Headers" =  "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-    "method.response.header.Access-Control-Allow-Methods" = "'GET,OPTIONS,POST,PUT,DELETE'",
-    "method.response.header.Access-Control-Allow-Origin" = "'*'"
-}
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin" = "'*'",
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+    "method.response.header.Access-Control-Allow-Methods" = "'GET, PUT, POST, DELETE, HEAD, OPTIONS'",
+  }
 }
 
 resource "aws_lambda_permission" "update_course" {
@@ -714,24 +719,26 @@ resource "aws_api_gateway_method_response" "options_update_course" {
   }
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Headers" = true,
-    "method.response.header.Access-Control-Allow-Methods" = true,
     "method.response.header.Access-Control-Allow-Origin" = true
+    "method.response.header.Access-Control-Allow-Headers" = true
+    "method.response.header.Access-Control-Allow-Methods" = true
+    "method.response.header.Access-Control-Allow-Credentials" = false
   }
 }
 
 resource "aws_api_gateway_integration_response" "options_update_course" {
   depends_on = [ aws_api_gateway_integration.options_update_course ]
+
   rest_api_id = aws_api_gateway_rest_api.api.id
   resource_id = aws_api_gateway_resource.update_course.id
   http_method = aws_api_gateway_method.options_update_course.http_method
-  status_code = "200"
+  status_code = aws_api_gateway_method_response.options_update_course.status_code
 
- response_parameters = {
-    "method.response.header.Access-Control-Allow-Headers" =  "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-    "method.response.header.Access-Control-Allow-Methods" = "'GET,OPTIONS,POST,PUT,DELETE'",
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+    "method.response.header.Access-Control-Allow-Methods" = "'GET, PUT, OPTIONS, DELETE'",
     "method.response.header.Access-Control-Allow-Origin" = "'*'"
-}
+  }
 }
 
 
