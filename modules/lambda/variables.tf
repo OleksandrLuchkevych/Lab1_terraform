@@ -21,3 +21,8 @@ variable "get-course_arn" {
 variable "delete-course_arn" {
   type = string 
 }
+
+
+variable "sns_topic_arn" {
+  type = string
+}

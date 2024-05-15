@@ -21,3 +21,8 @@ output "get_course_role_arn" {
 output "delete_course_role_arn" {
   value = aws_iam_role.delete_course_role.arn
 }
+
+
+output "sns_topic_lambda_arn" {
+  value = aws_iam_role.sns_lambda_role.arn
+}
